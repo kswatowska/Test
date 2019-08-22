@@ -1,0 +1,2070 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testCase id="1">
+  <summary>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;br&gt;</summary>
+  <steps>
+    <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexConnect" name="ApexConnect" testItemId="1" title="Salesforce Connect: PwC_System_Admin (Test)">
+      <arguments>
+        <argument id="connectionName">
+          <value class="value" valueClass="string">PwC_System_Admin</value>
+        </argument>
+        <argument id="resultName">
+          <value class="value" valueClass="string">PwC_System_Admin</value>
+        </argument>
+        <argument id="resultScope">
+          <value class="value" valueClass="string">Test</value>
+        </argument>
+        <argument id="uiApplicationName"/>
+        <argument id="quickUiLogin">
+          <value class="value" valueClass="boolean">true</value>
+        </argument>
+        <argument id="closeAllPrimaryTabs">
+          <value class="value" valueClass="boolean">true</value>
+        </argument>
+        <argument id="reuseConnectionName"/>
+        <argument id="alreadyOpenBehaviour">
+          <value class="value" valueClass="string">Fail</value>
+        </argument>
+        <argument id="privateBrowsingMode"/>
+        <argument id="enableObjectIdLogging">
+          <value class="value" valueClass="boolean">true</value>
+        </argument>
+        <argument id="autoCleanup"/>
+        <argument id="cleanupConnectionName"/>
+        <argument id="logFileLocation"/>
+        <argument id="username"/>
+        <argument id="password"/>
+        <argument id="securityToken"/>
+        <argument id="environment"/>
+        <argument id="lightningMode">
+          <value class="value" valueClass="string">default</value>
+        </argument>
+        <argument id="webBrowser"/>
+      </arguments>
+    </apiCall>
+    <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexSoqlQuery" name="ApexSoqlQuery" testItemId="356" title="SOQL Query: select Id from User where (id = '0054E000002pHpMQAU' or id = '0054E000002pHpNQAU' or id = '0054E000002pHpPQAU' or id = '0054E000002pHpQQAU' or id = '0054E000002qR0aQAE' or id = '0054E0000036S41QAE' or id ='0054E000003pmkNQAQ')=&gt;UserRows">
+      <tags/>
+      <arguments>
+        <argument id="soqlQuery">
+          <value class="value" valueClass="string">select Id from User where (id = '0054E000002pHpMQAU' or id = '0054E000002pHpNQAU' or id = '0054E000002pHpPQAU' or id = '0054E000002pHpQQAU' or id = '0054E000002qR0aQAE' or id = '0054E0000036S41QAE' or id ='0054E000003pmkNQAQ')</value>
+        </argument>
+        <argument id="apexConnectionName">
+          <value class="value" valueClass="string">PwC_System_Admin</value>
+        </argument>
+        <argument id="resultListName">
+          <value class="value" valueClass="string">UserRows</value>
+        </argument>
+        <argument id="resultScope">
+          <value class="value" valueClass="string">Test</value>
+        </argument>
+      </arguments>
+    </apiCall>
+    <apiCall apiId="com.provar.plugins.bundled.apis.control.ForEach" name="ForEach" testItemId="358" title="For Each: {UserRows}=&gt;user">
+      <arguments>
+        <argument id="list">
+          <value class="variable">
+            <path element="UserRows"/>
+          </value>
+        </argument>
+        <argument id="fromItem">
+          <value class="value" valueClass="decimal">1</value>
+        </argument>
+        <argument id="valueName">
+          <value class="value" valueClass="string">user</value>
+        </argument>
+        <argument id="continueOnFailure"/>
+      </arguments>
+      <clauses>
+        <clause name="substeps" testItemId="359">
+          <steps>
+            <apiCall apiId="com.provar.plugins.bundled.apis.control.StepGroup" name="StepGroup" testItemId="12" title="CleanUp Outbound Transactions">
+              <tags/>
+              <arguments>
+                <argument id="description">
+                  <value class="value" valueClass="string">CleanUp Outbound Transactions</value>
+                </argument>
+              </arguments>
+              <clauses>
+                <clause name="hidden" testItemId="13">
+                  <steps>
+                    <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexSoqlQuery" name="ApexSoqlQuery" testItemId="25" title="SOQL Query: select count() from Outbound_Transaction__c where CreatedById = '{user.Id}' and CreatedDate&gt; {var_StartDate} and CreatedDate&lt; {var_EndDate}=&gt;Outbound_TransactionRows">
+                      <arguments>
+                        <argument id="soqlQuery">
+                          <value class="compound">
+                            <parts>
+                              <value valueClass="string">select count() from Outbound_Transaction__c where CreatedById = '</value>
+                              <variable>
+                                <path element="user"/>
+                                <path element="Id"/>
+                              </variable>
+                              <value valueClass="string">' and CreatedDate&gt; </value>
+                              <variable>
+                                <path element="var_StartDate"/>
+                              </variable>
+                              <value valueClass="string"> and CreatedDate&lt; </value>
+                              <variable>
+                                <path element="var_EndDate"/>
+                              </variable>
+                            </parts>
+                          </value>
+                        </argument>
+                        <argument id="apexConnectionName">
+                          <value class="value" valueClass="string">PwC_System_Admin</value>
+                        </argument>
+                        <argument id="resultListName">
+                          <value class="value" valueClass="string">Outbound_TransactionRows</value>
+                        </argument>
+                        <argument id="resultScope">
+                          <value class="value" valueClass="string">Test</value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.SetValues" name="SetValues" testItemId="26" title="Set Values: var_TotalNumberOfExecutions">
+                      <arguments>
+                        <argument id="values">
+                          <value class="valueList" mutable="Mutable">
+                            <namedValues mutable="Mutable">
+                              <namedValue name="valuePath">
+                                <value class="value" valueClass="string">var_TotalNumberOfExecutions</value>
+                              </namedValue>
+                              <namedValue name="value">
+                                <value class="add">
+                                  <lhs class="div">
+                                    <lhs class="variable" topLevel="true">
+                                      <path element="Outbound_TransactionRows"/>
+                                    </lhs>
+                                    <rhs class="value" valueClass="decimal">2000</rhs>
+                                  </lhs>
+                                  <rhs class="value" valueClass="decimal">1</rhs>
+                                </value>
+                              </namedValue>
+                              <namedValue name="valueScope">
+                                <value class="value" valueClass="string">Test</value>
+                              </namedValue>
+                            </namedValues>
+                          </value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.DoWhile" name="DoWhile" testItemId="18" title="While: {var_TotalNumberOfExecutions != 0}">
+                      <arguments>
+                        <argument id="condition">
+                          <value class="ne">
+                            <lhs class="variable">
+                              <path element="var_TotalNumberOfExecutions"/>
+                            </lhs>
+                            <rhs class="value" valueClass="decimal">0</rhs>
+                          </value>
+                        </argument>
+                        <argument id="counterName">
+                          <value class="value" valueClass="string">LoopCounter</value>
+                        </argument>
+                        <argument id="counterStart">
+                          <value class="value" valueClass="decimal">1</value>
+                        </argument>
+                        <argument id="counterEnd">
+                          <value class="variable">
+                            <path element="var_TotalNumberOfExecutions"/>
+                          </value>
+                        </argument>
+                        <argument id="continueOnFailure">
+                          <value class="value" valueClass="boolean">false</value>
+                        </argument>
+                      </arguments>
+                      <clauses>
+                        <clause name="substeps" testItemId="19">
+                          <steps>
+                            <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexExecute" name="ApexExecute" testItemId="21" title="Apex Execute">
+                              <arguments>
+                                <argument id="apexConnectionName">
+                                  <value class="value" valueClass="string">PwC_System_Admin</value>
+                                </argument>
+                                <argument id="apexBlock">
+                                  <value class="compound">
+                                    <parts>
+                                      <value valueClass="string">Outbound_Transaction__c[] outBTToDelete = [select Id from Outbound_Transaction__c where CreatedById= '</value>
+                                      <variable>
+                                        <path element="user"/>
+                                        <path element="Id"/>
+                                      </variable>
+                                      <value valueClass="string">' and CreatedDate &gt; </value>
+                                      <variable>
+                                        <path element="var_StartDate"/>
+                                      </variable>
+                                      <value valueClass="string"> and CreatedDate &lt; </value>
+                                      <variable>
+                                        <path element="var_EndDate"/>
+                                      </variable>
+                                      <value valueClass="string"> limit 2000] ;\ndelete outBTToDelete;</value>
+                                    </parts>
+                                  </value>
+                                </argument>
+                                <argument id="results">
+                                  <value class="valueList" mutable="Mutable">
+                                    <namedValues mutable="Mutable">
+                                      <namedValue name="resultName">
+                                        <value class="value" valueClass="string">ExecuteResult</value>
+                                      </namedValue>
+                                      <namedValue name="resultScope">
+                                        <value class="value" valueClass="string">Test</value>
+                                      </namedValue>
+                                      <namedValue name="regularExpression">
+                                        <value class="value" valueClass="string">Success</value>
+                                      </namedValue>
+                                    </namedValues>
+                                  </value>
+                                </argument>
+                              </arguments>
+                            </apiCall>
+                          </steps>
+                        </clause>
+                      </clauses>
+                    </apiCall>
+                  </steps>
+                </clause>
+              </clauses>
+            </apiCall>
+            <apiCall apiId="com.provar.plugins.bundled.apis.control.StepGroup" name="StepGroup" testItemId="278" title="CleanUp Cost_Centres">
+              <tags/>
+              <arguments>
+                <argument id="description">
+                  <value class="value" valueClass="string">CleanUp Cost_Centres</value>
+                </argument>
+              </arguments>
+              <clauses>
+                <clause name="hidden" testItemId="286">
+                  <steps>
+                    <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexSoqlQuery" name="ApexSoqlQuery" testItemId="287" title="SOQL Query: select count() from Cost_Centres__c where CreatedById = '{user.Id}' and CreatedDate &gt; {var_StartDate} and CreatedDate &lt; {var_EndDate}=&gt;Cost_CentresRows">
+                      <arguments>
+                        <argument id="soqlQuery">
+                          <value class="compound">
+                            <parts>
+                              <value valueClass="string">select count() from Cost_Centres__c where CreatedById = '</value>
+                              <variable>
+                                <path element="user"/>
+                                <path element="Id"/>
+                              </variable>
+                              <value valueClass="string">' and CreatedDate &gt; </value>
+                              <variable>
+                                <path element="var_StartDate"/>
+                              </variable>
+                              <value valueClass="string"> and CreatedDate &lt; </value>
+                              <variable>
+                                <path element="var_EndDate"/>
+                              </variable>
+                            </parts>
+                          </value>
+                        </argument>
+                        <argument id="apexConnectionName">
+                          <value class="value" valueClass="string">PwC_System_Admin</value>
+                        </argument>
+                        <argument id="resultListName">
+                          <value class="value" valueClass="string">Cost_CentresRows</value>
+                        </argument>
+                        <argument id="resultScope">
+                          <value class="value" valueClass="string">Test</value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.SetValues" name="SetValues" testItemId="288" title="Set Values: var_TotalNumCost_CentresRows">
+                      <arguments>
+                        <argument id="values">
+                          <value class="valueList" mutable="Mutable">
+                            <namedValues mutable="Mutable">
+                              <namedValue name="valuePath">
+                                <value class="value" valueClass="string">var_TotalNumCost_CentresRows</value>
+                              </namedValue>
+                              <namedValue name="value">
+                                <value class="add">
+                                  <lhs class="div">
+                                    <lhs class="variable" topLevel="true">
+                                      <path element="Cost_CentresRows"/>
+                                    </lhs>
+                                    <rhs class="value" valueClass="decimal">2000</rhs>
+                                  </lhs>
+                                  <rhs class="value" valueClass="decimal">1</rhs>
+                                </value>
+                              </namedValue>
+                              <namedValue name="valueScope">
+                                <value class="value" valueClass="string">Test</value>
+                              </namedValue>
+                            </namedValues>
+                          </value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.DoWhile" name="DoWhile" testItemId="289" title="While: {var_TotalNumCost_CentresRows != 0}">
+                      <arguments>
+                        <argument id="condition">
+                          <value class="ne">
+                            <lhs class="variable">
+                              <path element="var_TotalNumCost_CentresRows"/>
+                            </lhs>
+                            <rhs class="value" valueClass="decimal">0</rhs>
+                          </value>
+                        </argument>
+                        <argument id="counterName">
+                          <value class="value" valueClass="string">LoopCounter</value>
+                        </argument>
+                        <argument id="counterStart">
+                          <value class="value" valueClass="decimal">1</value>
+                        </argument>
+                        <argument id="counterEnd">
+                          <value class="variable">
+                            <path element="var_TotalNumCost_CentresRows"/>
+                          </value>
+                        </argument>
+                        <argument id="continueOnFailure">
+                          <value class="value" valueClass="boolean">false</value>
+                        </argument>
+                      </arguments>
+                      <clauses>
+                        <clause name="substeps" testItemId="290">
+                          <steps>
+                            <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexExecute" name="ApexExecute" testItemId="291" title="Apex Execute">
+                              <arguments>
+                                <argument id="apexConnectionName">
+                                  <value class="value" valueClass="string">PwC_System_Admin</value>
+                                </argument>
+                                <argument id="apexBlock">
+                                  <value class="compound">
+                                    <parts>
+                                      <value valueClass="string">Cost_Centres__c[] recordsToDelete = [select Id from Cost_Centres__c where CreatedById= '</value>
+                                      <variable>
+                                        <path element="user"/>
+                                        <path element="Id"/>
+                                      </variable>
+                                      <value valueClass="string">' and CreatedDate &gt; </value>
+                                      <variable>
+                                        <path element="var_StartDate"/>
+                                      </variable>
+                                      <value valueClass="string"> and CreatedDate &lt; </value>
+                                      <variable>
+                                        <path element="var_EndDate"/>
+                                      </variable>
+                                      <value valueClass="string"> limit 2000] ;\ndelete recordsToDelete;</value>
+                                    </parts>
+                                  </value>
+                                </argument>
+                                <argument id="results">
+                                  <value class="valueList" mutable="Mutable">
+                                    <namedValues mutable="Mutable">
+                                      <namedValue name="resultName">
+                                        <value class="value" valueClass="string">ExecuteResult</value>
+                                      </namedValue>
+                                      <namedValue name="resultScope">
+                                        <value class="value" valueClass="string">Test</value>
+                                      </namedValue>
+                                      <namedValue name="regularExpression">
+                                        <value class="value" valueClass="string">Success</value>
+                                      </namedValue>
+                                    </namedValues>
+                                  </value>
+                                </argument>
+                              </arguments>
+                            </apiCall>
+                          </steps>
+                        </clause>
+                      </clauses>
+                    </apiCall>
+                  </steps>
+                </clause>
+              </clauses>
+            </apiCall>
+            <apiCall apiId="com.provar.plugins.bundled.apis.control.StepGroup" name="StepGroup" testItemId="264" title="CleanUp Account_Plan__c">
+              <tags/>
+              <arguments>
+                <argument id="description">
+                  <value class="value" valueClass="string">CleanUp Account_Plan__c</value>
+                </argument>
+              </arguments>
+              <clauses>
+                <clause name="hidden" testItemId="272">
+                  <steps>
+                    <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexSoqlQuery" name="ApexSoqlQuery" testItemId="273" title="SOQL Query: select count() from Account_Plan__c where CreatedById = '{user.Id}' and CreatedDate &gt; {var_StartDate} and CreatedDate &lt; {var_EndDate}=&gt;Account_PlanRows">
+                      <arguments>
+                        <argument id="soqlQuery">
+                          <value class="compound">
+                            <parts>
+                              <value valueClass="string">select count() from Account_Plan__c where CreatedById = '</value>
+                              <variable>
+                                <path element="user"/>
+                                <path element="Id"/>
+                              </variable>
+                              <value valueClass="string">' and CreatedDate &gt; </value>
+                              <variable>
+                                <path element="var_StartDate"/>
+                              </variable>
+                              <value valueClass="string"> and CreatedDate &lt; </value>
+                              <variable>
+                                <path element="var_EndDate"/>
+                              </variable>
+                            </parts>
+                          </value>
+                        </argument>
+                        <argument id="apexConnectionName">
+                          <value class="value" valueClass="string">PwC_System_Admin</value>
+                        </argument>
+                        <argument id="resultListName">
+                          <value class="value" valueClass="string">Account_PlanRows</value>
+                        </argument>
+                        <argument id="resultScope">
+                          <value class="value" valueClass="string">Test</value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.SetValues" name="SetValues" testItemId="274" title="Set Values: var_TotalNumAccount_PlanRows">
+                      <arguments>
+                        <argument id="values">
+                          <value class="valueList" mutable="Mutable">
+                            <namedValues mutable="Mutable">
+                              <namedValue name="valuePath">
+                                <value class="value" valueClass="string">var_TotalNumAccount_PlanRows</value>
+                              </namedValue>
+                              <namedValue name="value">
+                                <value class="add">
+                                  <lhs class="div">
+                                    <lhs class="variable" topLevel="true">
+                                      <path element="Account_PlanRows"/>
+                                    </lhs>
+                                    <rhs class="value" valueClass="decimal">2000</rhs>
+                                  </lhs>
+                                  <rhs class="value" valueClass="decimal">1</rhs>
+                                </value>
+                              </namedValue>
+                              <namedValue name="valueScope">
+                                <value class="value" valueClass="string">Test</value>
+                              </namedValue>
+                            </namedValues>
+                          </value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.DoWhile" name="DoWhile" testItemId="275" title="While: {var_TotalNumAccount_PlanRows != 0}">
+                      <arguments>
+                        <argument id="condition">
+                          <value class="ne">
+                            <lhs class="variable">
+                              <path element="var_TotalNumAccount_PlanRows"/>
+                            </lhs>
+                            <rhs class="value" valueClass="decimal">0</rhs>
+                          </value>
+                        </argument>
+                        <argument id="counterName">
+                          <value class="value" valueClass="string">LoopCounter</value>
+                        </argument>
+                        <argument id="counterStart">
+                          <value class="value" valueClass="decimal">1</value>
+                        </argument>
+                        <argument id="counterEnd">
+                          <value class="variable">
+                            <path element="var_TotalNumAccount_PlanRows"/>
+                          </value>
+                        </argument>
+                        <argument id="continueOnFailure">
+                          <value class="value" valueClass="boolean">false</value>
+                        </argument>
+                      </arguments>
+                      <clauses>
+                        <clause name="substeps" testItemId="276">
+                          <steps>
+                            <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexExecute" name="ApexExecute" testItemId="277" title="Apex Execute">
+                              <arguments>
+                                <argument id="apexConnectionName">
+                                  <value class="value" valueClass="string">PwC_System_Admin</value>
+                                </argument>
+                                <argument id="apexBlock">
+                                  <value class="compound">
+                                    <parts>
+                                      <value valueClass="string">Account_Plan__c[] recordsToDelete = [select Id from Account_Plan__c where CreatedById= '</value>
+                                      <variable>
+                                        <path element="user"/>
+                                        <path element="Id"/>
+                                      </variable>
+                                      <value valueClass="string">' and CreatedDate &gt; </value>
+                                      <variable>
+                                        <path element="var_StartDate"/>
+                                      </variable>
+                                      <value valueClass="string"> and CreatedDate &lt; </value>
+                                      <variable>
+                                        <path element="var_EndDate"/>
+                                      </variable>
+                                      <value valueClass="string"> limit 2000] ;\ndelete recordsToDelete;</value>
+                                    </parts>
+                                  </value>
+                                </argument>
+                                <argument id="results">
+                                  <value class="valueList" mutable="Mutable">
+                                    <namedValues mutable="Mutable">
+                                      <namedValue name="resultName">
+                                        <value class="value" valueClass="string">ExecuteResult</value>
+                                      </namedValue>
+                                      <namedValue name="resultScope">
+                                        <value class="value" valueClass="string">Test</value>
+                                      </namedValue>
+                                      <namedValue name="regularExpression">
+                                        <value class="value" valueClass="string">Success</value>
+                                      </namedValue>
+                                    </namedValues>
+                                  </value>
+                                </argument>
+                              </arguments>
+                            </apiCall>
+                          </steps>
+                        </clause>
+                      </clauses>
+                    </apiCall>
+                  </steps>
+                </clause>
+              </clauses>
+            </apiCall>
+            <apiCall apiId="com.provar.plugins.bundled.apis.control.StepGroup" name="StepGroup" testItemId="224" title="CleanUp Confidential_Client_Feedback">
+              <tags/>
+              <arguments>
+                <argument id="description">
+                  <value class="value" valueClass="string">CleanUp Confidential_Client_Feedback</value>
+                </argument>
+              </arguments>
+              <clauses>
+                <clause name="hidden" testItemId="239">
+                  <steps>
+                    <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexSoqlQuery" name="ApexSoqlQuery" testItemId="240" title="SOQL Query: select count() from Confidential_Client_Feedback__c where CreatedById = '{user.Id}'  and CreatedDate &gt; {var_StartDate} and CreatedDate &lt; {var_EndDate}=&gt;Confidential_Client_FeedbackRows">
+                      <arguments>
+                        <argument id="soqlQuery">
+                          <value class="compound">
+                            <parts>
+                              <value valueClass="string">select count() from Confidential_Client_Feedback__c where CreatedById = '</value>
+                              <variable>
+                                <path element="user"/>
+                                <path element="Id"/>
+                              </variable>
+                              <value valueClass="string">'  and CreatedDate &gt; </value>
+                              <variable>
+                                <path element="var_StartDate"/>
+                              </variable>
+                              <value valueClass="string"> and CreatedDate &lt; </value>
+                              <variable>
+                                <path element="var_EndDate"/>
+                              </variable>
+                            </parts>
+                          </value>
+                        </argument>
+                        <argument id="apexConnectionName">
+                          <value class="value" valueClass="string">PwC_System_Admin</value>
+                        </argument>
+                        <argument id="resultListName">
+                          <value class="value" valueClass="string">Confidential_Client_FeedbackRows</value>
+                        </argument>
+                        <argument id="resultScope">
+                          <value class="value" valueClass="string">Test</value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.SetValues" name="SetValues" testItemId="241" title="Set Values: var_TotalNumConfidential_Client_FeedbackRows">
+                      <arguments>
+                        <argument id="values">
+                          <value class="valueList" mutable="Mutable">
+                            <namedValues mutable="Mutable">
+                              <namedValue name="valuePath">
+                                <value class="value" valueClass="string">var_TotalNumConfidential_Client_FeedbackRows</value>
+                              </namedValue>
+                              <namedValue name="value">
+                                <value class="add">
+                                  <lhs class="div">
+                                    <lhs class="variable" topLevel="true">
+                                      <path element="Confidential_Client_FeedbackRows"/>
+                                    </lhs>
+                                    <rhs class="value" valueClass="decimal">2000</rhs>
+                                  </lhs>
+                                  <rhs class="value" valueClass="decimal">1</rhs>
+                                </value>
+                              </namedValue>
+                              <namedValue name="valueScope">
+                                <value class="value" valueClass="string">Test</value>
+                              </namedValue>
+                            </namedValues>
+                          </value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.DoWhile" name="DoWhile" testItemId="242" title="While: {var_TotalNumConfidential_Client_FeedbackRows != 0}">
+                      <arguments>
+                        <argument id="condition">
+                          <value class="ne">
+                            <lhs class="variable">
+                              <path element="var_TotalNumConfidential_Client_FeedbackRows"/>
+                            </lhs>
+                            <rhs class="value" valueClass="decimal">0</rhs>
+                          </value>
+                        </argument>
+                        <argument id="counterName">
+                          <value class="value" valueClass="string">LoopCounter</value>
+                        </argument>
+                        <argument id="counterStart">
+                          <value class="value" valueClass="decimal">1</value>
+                        </argument>
+                        <argument id="counterEnd">
+                          <value class="variable">
+                            <path element="var_TotalNumConfidential_Client_FeedbackRows"/>
+                          </value>
+                        </argument>
+                        <argument id="continueOnFailure">
+                          <value class="value" valueClass="boolean">false</value>
+                        </argument>
+                      </arguments>
+                      <clauses>
+                        <clause name="substeps" testItemId="243">
+                          <steps>
+                            <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexExecute" name="ApexExecute" testItemId="244" title="Apex Execute">
+                              <arguments>
+                                <argument id="apexConnectionName">
+                                  <value class="value" valueClass="string">PwC_System_Admin</value>
+                                </argument>
+                                <argument id="apexBlock">
+                                  <value class="compound">
+                                    <parts>
+                                      <value valueClass="string">Confidential_Client_Feedback__c[] recordsToDelete = [select Id from Confidential_Client_Feedback__c where CreatedById= '</value>
+                                      <variable>
+                                        <path element="user"/>
+                                        <path element="Id"/>
+                                      </variable>
+                                      <value valueClass="string">' and CreatedDate &gt; </value>
+                                      <variable>
+                                        <path element="var_StartDate"/>
+                                      </variable>
+                                      <value valueClass="string"> and CreatedDate &lt; </value>
+                                      <variable>
+                                        <path element="var_EndDate"/>
+                                      </variable>
+                                      <value valueClass="string"> limit 2000] ;\ndelete recordsToDelete;</value>
+                                    </parts>
+                                  </value>
+                                </argument>
+                                <argument id="results">
+                                  <value class="valueList" mutable="Mutable">
+                                    <namedValues mutable="Mutable">
+                                      <namedValue name="resultName">
+                                        <value class="value" valueClass="string">ExecuteResult</value>
+                                      </namedValue>
+                                      <namedValue name="resultScope">
+                                        <value class="value" valueClass="string">Test</value>
+                                      </namedValue>
+                                      <namedValue name="regularExpression">
+                                        <value class="value" valueClass="string">Success</value>
+                                      </namedValue>
+                                    </namedValues>
+                                  </value>
+                                </argument>
+                              </arguments>
+                            </apiCall>
+                          </steps>
+                        </clause>
+                      </clauses>
+                    </apiCall>
+                  </steps>
+                </clause>
+              </clauses>
+            </apiCall>
+            <apiCall apiId="com.provar.plugins.bundled.apis.control.StepGroup" name="StepGroup" testItemId="203" title="CleanUp Confidential_Client_Feedback_Score">
+              <tags/>
+              <arguments>
+                <argument id="description">
+                  <value class="value" valueClass="string">CleanUp Confidential_Client_Feedback_Score</value>
+                </argument>
+              </arguments>
+              <clauses>
+                <clause name="hidden" testItemId="218">
+                  <steps>
+                    <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexSoqlQuery" name="ApexSoqlQuery" testItemId="219" title="SOQL Query: select count() from Confidential_Client_Feedback_Score__c where CreatedById = '{user.Id}'  and CreatedDate &gt; {var_StartDate} and CreatedDate &lt; {var_EndDate}=&gt;Confidential_Client_Feedback_ScoreRows">
+                      <arguments>
+                        <argument id="soqlQuery">
+                          <value class="compound">
+                            <parts>
+                              <value valueClass="string">select count() from Confidential_Client_Feedback_Score__c where CreatedById = '</value>
+                              <variable>
+                                <path element="user"/>
+                                <path element="Id"/>
+                              </variable>
+                              <value valueClass="string">'  and CreatedDate &gt; </value>
+                              <variable>
+                                <path element="var_StartDate"/>
+                              </variable>
+                              <value valueClass="string"> and CreatedDate &lt; </value>
+                              <variable>
+                                <path element="var_EndDate"/>
+                              </variable>
+                            </parts>
+                          </value>
+                        </argument>
+                        <argument id="apexConnectionName">
+                          <value class="value" valueClass="string">PwC_System_Admin</value>
+                        </argument>
+                        <argument id="resultListName">
+                          <value class="value" valueClass="string">Confidential_Client_Feedback_ScoreRows</value>
+                        </argument>
+                        <argument id="resultScope">
+                          <value class="value" valueClass="string">Test</value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.SetValues" name="SetValues" testItemId="220" title="Set Values: var_TotalNumConfidential_Client_Feedback_ScoreRows">
+                      <arguments>
+                        <argument id="values">
+                          <value class="valueList" mutable="Mutable">
+                            <namedValues mutable="Mutable">
+                              <namedValue name="valuePath">
+                                <value class="value" valueClass="string">var_TotalNumConfidential_Client_Feedback_ScoreRows</value>
+                              </namedValue>
+                              <namedValue name="value">
+                                <value class="add">
+                                  <lhs class="div">
+                                    <lhs class="variable" topLevel="true">
+                                      <path element="Confidential_Client_Feedback_ScoreRows"/>
+                                    </lhs>
+                                    <rhs class="value" valueClass="decimal">2000</rhs>
+                                  </lhs>
+                                  <rhs class="value" valueClass="decimal">1</rhs>
+                                </value>
+                              </namedValue>
+                              <namedValue name="valueScope">
+                                <value class="value" valueClass="string">Test</value>
+                              </namedValue>
+                            </namedValues>
+                          </value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.DoWhile" name="DoWhile" testItemId="221" title="While: {var_TotalNumConfidential_Client_Feedback_ScoreRows != 0}">
+                      <arguments>
+                        <argument id="condition">
+                          <value class="ne">
+                            <lhs class="variable">
+                              <path element="var_TotalNumConfidential_Client_Feedback_ScoreRows"/>
+                            </lhs>
+                            <rhs class="value" valueClass="decimal">0</rhs>
+                          </value>
+                        </argument>
+                        <argument id="counterName">
+                          <value class="value" valueClass="string">LoopCounter</value>
+                        </argument>
+                        <argument id="counterStart">
+                          <value class="value" valueClass="decimal">1</value>
+                        </argument>
+                        <argument id="counterEnd">
+                          <value class="variable">
+                            <path element="var_TotalNumConfidential_Client_Feedback_ScoreRows"/>
+                          </value>
+                        </argument>
+                        <argument id="continueOnFailure">
+                          <value class="value" valueClass="boolean">false</value>
+                        </argument>
+                      </arguments>
+                      <clauses>
+                        <clause name="substeps" testItemId="222">
+                          <steps>
+                            <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexExecute" name="ApexExecute" testItemId="223" title="Apex Execute">
+                              <arguments>
+                                <argument id="apexConnectionName">
+                                  <value class="value" valueClass="string">PwC_System_Admin</value>
+                                </argument>
+                                <argument id="apexBlock">
+                                  <value class="compound">
+                                    <parts>
+                                      <value valueClass="string">Confidential_Client_Feedback_Score__c[] clientFeedbackScoresToDelete = [select Id from Confidential_Client_Feedback_Score__c where CreatedById= '</value>
+                                      <variable>
+                                        <path element="user"/>
+                                        <path element="Id"/>
+                                      </variable>
+                                      <value valueClass="string">' and CreatedDate &gt; </value>
+                                      <variable>
+                                        <path element="var_StartDate"/>
+                                      </variable>
+                                      <value valueClass="string"> and CreatedDate &lt; </value>
+                                      <variable>
+                                        <path element="var_EndDate"/>
+                                      </variable>
+                                      <value valueClass="string"> limit 2000] ;\ndelete clientFeedbackScoresToDelete;</value>
+                                    </parts>
+                                  </value>
+                                </argument>
+                                <argument id="results">
+                                  <value class="valueList" mutable="Mutable">
+                                    <namedValues mutable="Mutable">
+                                      <namedValue name="resultName">
+                                        <value class="value" valueClass="string">ExecuteResult</value>
+                                      </namedValue>
+                                      <namedValue name="resultScope">
+                                        <value class="value" valueClass="string">Test</value>
+                                      </namedValue>
+                                      <namedValue name="regularExpression">
+                                        <value class="value" valueClass="string">Success</value>
+                                      </namedValue>
+                                    </namedValues>
+                                  </value>
+                                </argument>
+                              </arguments>
+                            </apiCall>
+                          </steps>
+                        </clause>
+                      </clauses>
+                    </apiCall>
+                  </steps>
+                </clause>
+              </clauses>
+            </apiCall>
+            <apiCall apiId="com.provar.plugins.bundled.apis.control.StepGroup" name="StepGroup" testItemId="189" title="CleanUp Client_Issue">
+              <tags/>
+              <arguments>
+                <argument id="description">
+                  <value class="value" valueClass="string">CleanUp Client_Issue</value>
+                </argument>
+              </arguments>
+              <clauses>
+                <clause name="hidden" testItemId="197">
+                  <steps>
+                    <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexSoqlQuery" name="ApexSoqlQuery" testItemId="198" title="SOQL Query: select count() from Client_Issue__c where CreatedById = '{user.Id}'  and CreatedDate &gt; {var_StartDate} and CreatedDate &lt; {var_EndDate}=&gt;Client_IssueRows">
+                      <arguments>
+                        <argument id="soqlQuery">
+                          <value class="compound">
+                            <parts>
+                              <value valueClass="string">select count() from Client_Issue__c where CreatedById = '</value>
+                              <variable>
+                                <path element="user"/>
+                                <path element="Id"/>
+                              </variable>
+                              <value valueClass="string">'  and CreatedDate &gt; </value>
+                              <variable>
+                                <path element="var_StartDate"/>
+                              </variable>
+                              <value valueClass="string"> and CreatedDate &lt; </value>
+                              <variable>
+                                <path element="var_EndDate"/>
+                              </variable>
+                            </parts>
+                          </value>
+                        </argument>
+                        <argument id="apexConnectionName">
+                          <value class="value" valueClass="string">PwC_System_Admin</value>
+                        </argument>
+                        <argument id="resultListName">
+                          <value class="value" valueClass="string">Client_IssueRows</value>
+                        </argument>
+                        <argument id="resultScope">
+                          <value class="value" valueClass="string">Test</value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.SetValues" name="SetValues" testItemId="199" title="Set Values: var_TotalNumClient_IssueRow">
+                      <arguments>
+                        <argument id="values">
+                          <value class="valueList" mutable="Mutable">
+                            <namedValues mutable="Mutable">
+                              <namedValue name="valuePath">
+                                <value class="value" valueClass="string">var_TotalNumClient_IssueRow</value>
+                              </namedValue>
+                              <namedValue name="value">
+                                <value class="add">
+                                  <lhs class="div">
+                                    <lhs class="variable" topLevel="true">
+                                      <path element="Client_IssueRows"/>
+                                    </lhs>
+                                    <rhs class="value" valueClass="decimal">2000</rhs>
+                                  </lhs>
+                                  <rhs class="value" valueClass="decimal">1</rhs>
+                                </value>
+                              </namedValue>
+                              <namedValue name="valueScope">
+                                <value class="value" valueClass="string">Test</value>
+                              </namedValue>
+                            </namedValues>
+                          </value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.DoWhile" name="DoWhile" testItemId="200" title="While: {var_TotalNumClient_IssueRow != 0}">
+                      <arguments>
+                        <argument id="condition">
+                          <value class="ne">
+                            <lhs class="variable">
+                              <path element="var_TotalNumClient_IssueRow"/>
+                            </lhs>
+                            <rhs class="value" valueClass="decimal">0</rhs>
+                          </value>
+                        </argument>
+                        <argument id="counterName">
+                          <value class="value" valueClass="string">LoopCounter</value>
+                        </argument>
+                        <argument id="counterStart">
+                          <value class="value" valueClass="decimal">1</value>
+                        </argument>
+                        <argument id="counterEnd">
+                          <value class="variable">
+                            <path element="var_TotalNumClient_IssueRow"/>
+                          </value>
+                        </argument>
+                        <argument id="continueOnFailure">
+                          <value class="value" valueClass="boolean">false</value>
+                        </argument>
+                      </arguments>
+                      <clauses>
+                        <clause name="substeps" testItemId="201">
+                          <steps>
+                            <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexExecute" name="ApexExecute" testItemId="202" title="Apex Execute">
+                              <arguments>
+                                <argument id="apexConnectionName">
+                                  <value class="value" valueClass="string">PwC_System_Admin</value>
+                                </argument>
+                                <argument id="apexBlock">
+                                  <value class="compound">
+                                    <parts>
+                                      <value valueClass="string">Client_Issue__c[] clientIssuesToDelete = [select Id from Client_Issue__c where CreatedById= '</value>
+                                      <variable>
+                                        <path element="user"/>
+                                        <path element="Id"/>
+                                      </variable>
+                                      <value valueClass="string">' and CreatedDate &gt; </value>
+                                      <variable>
+                                        <path element="var_StartDate"/>
+                                      </variable>
+                                      <value valueClass="string"> and CreatedDate &lt; </value>
+                                      <variable>
+                                        <path element="var_EndDate"/>
+                                      </variable>
+                                      <value valueClass="string"> limit 2000] ;\ndelete clientIssuesToDelete;</value>
+                                    </parts>
+                                  </value>
+                                </argument>
+                                <argument id="results">
+                                  <value class="valueList" mutable="Mutable">
+                                    <namedValues mutable="Mutable">
+                                      <namedValue name="resultName">
+                                        <value class="value" valueClass="string">ExecuteResult</value>
+                                      </namedValue>
+                                      <namedValue name="resultScope">
+                                        <value class="value" valueClass="string">Test</value>
+                                      </namedValue>
+                                      <namedValue name="regularExpression">
+                                        <value class="value" valueClass="string">Success</value>
+                                      </namedValue>
+                                    </namedValues>
+                                  </value>
+                                </argument>
+                              </arguments>
+                            </apiCall>
+                          </steps>
+                        </clause>
+                      </clauses>
+                    </apiCall>
+                  </steps>
+                </clause>
+              </clauses>
+            </apiCall>
+            <apiCall apiId="com.provar.plugins.bundled.apis.control.StepGroup" name="StepGroup" testItemId="138" title="CleanUp Client_Feedback">
+              <tags/>
+              <arguments>
+                <argument id="description">
+                  <value class="value" valueClass="string">CleanUp Client_Feedback</value>
+                </argument>
+              </arguments>
+              <clauses>
+                <clause name="hidden" testItemId="183">
+                  <steps>
+                    <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexSoqlQuery" name="ApexSoqlQuery" testItemId="184" title="SOQL Query: select count() from Client_Feedback__c where CreatedById = '{user.Id}' and CreatedDate&gt; {var_StartDate} and CreatedDate&lt; {var_EndDate}=&gt;Client_FeedbackRows">
+                      <arguments>
+                        <argument id="soqlQuery">
+                          <value class="compound">
+                            <parts>
+                              <value valueClass="string">select count() from Client_Feedback__c where CreatedById = '</value>
+                              <variable>
+                                <path element="user"/>
+                                <path element="Id"/>
+                              </variable>
+                              <value valueClass="string">' and CreatedDate&gt; </value>
+                              <variable>
+                                <path element="var_StartDate"/>
+                              </variable>
+                              <value valueClass="string"> and CreatedDate&lt; </value>
+                              <variable>
+                                <path element="var_EndDate"/>
+                              </variable>
+                            </parts>
+                          </value>
+                        </argument>
+                        <argument id="apexConnectionName">
+                          <value class="value" valueClass="string">PwC_System_Admin</value>
+                        </argument>
+                        <argument id="resultListName">
+                          <value class="value" valueClass="string">Client_FeedbackRows</value>
+                        </argument>
+                        <argument id="resultScope">
+                          <value class="value" valueClass="string">Test</value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.SetValues" name="SetValues" testItemId="185" title="Set Values: var_TotalNumClient_Feedback">
+                      <arguments>
+                        <argument id="values">
+                          <value class="valueList" mutable="Mutable">
+                            <namedValues mutable="Mutable">
+                              <namedValue name="valuePath">
+                                <value class="value" valueClass="string">var_TotalNumClient_Feedback</value>
+                              </namedValue>
+                              <namedValue name="value">
+                                <value class="add">
+                                  <lhs class="div">
+                                    <lhs class="variable" topLevel="true">
+                                      <path element="Client_FeedbackRows"/>
+                                    </lhs>
+                                    <rhs class="value" valueClass="decimal">2000</rhs>
+                                  </lhs>
+                                  <rhs class="value" valueClass="decimal">1</rhs>
+                                </value>
+                              </namedValue>
+                              <namedValue name="valueScope">
+                                <value class="value" valueClass="string">Test</value>
+                              </namedValue>
+                            </namedValues>
+                          </value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.DoWhile" name="DoWhile" testItemId="186" title="While: {var_TotalNumClient_Feedback != 0}">
+                      <arguments>
+                        <argument id="condition">
+                          <value class="ne">
+                            <lhs class="variable">
+                              <path element="var_TotalNumClient_Feedback"/>
+                            </lhs>
+                            <rhs class="value" valueClass="decimal">0</rhs>
+                          </value>
+                        </argument>
+                        <argument id="counterName">
+                          <value class="value" valueClass="string">LoopCounter</value>
+                        </argument>
+                        <argument id="counterStart">
+                          <value class="value" valueClass="decimal">1</value>
+                        </argument>
+                        <argument id="counterEnd">
+                          <value class="variable">
+                            <path element="var_TotalNumClient_Feedback"/>
+                          </value>
+                        </argument>
+                        <argument id="continueOnFailure">
+                          <value class="value" valueClass="boolean">false</value>
+                        </argument>
+                      </arguments>
+                      <clauses>
+                        <clause name="substeps" testItemId="187">
+                          <steps>
+                            <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexExecute" name="ApexExecute" testItemId="188" title="Apex Execute">
+                              <arguments>
+                                <argument id="apexConnectionName">
+                                  <value class="value" valueClass="string">PwC_System_Admin</value>
+                                </argument>
+                                <argument id="apexBlock">
+                                  <value class="compound">
+                                    <parts>
+                                      <value valueClass="string">Client_Feedback__c[] clientFeedbacksToDelete = [select Id from Client_Feedback__c where CreatedById= '</value>
+                                      <variable>
+                                        <path element="user"/>
+                                        <path element="Id"/>
+                                      </variable>
+                                      <value valueClass="string">' and CreatedDate &gt; </value>
+                                      <variable>
+                                        <path element="var_StartDate"/>
+                                      </variable>
+                                      <value valueClass="string"> and CreatedDate &lt; </value>
+                                      <variable>
+                                        <path element="var_EndDate"/>
+                                      </variable>
+                                      <value valueClass="string"> limit 2000] ;\ndelete clientFeedbacksToDelete;</value>
+                                    </parts>
+                                  </value>
+                                </argument>
+                                <argument id="results">
+                                  <value class="valueList" mutable="Mutable">
+                                    <namedValues mutable="Mutable">
+                                      <namedValue name="resultName">
+                                        <value class="value" valueClass="string">ExecuteResult</value>
+                                      </namedValue>
+                                      <namedValue name="resultScope">
+                                        <value class="value" valueClass="string">Test</value>
+                                      </namedValue>
+                                      <namedValue name="regularExpression">
+                                        <value class="value" valueClass="string">Success</value>
+                                      </namedValue>
+                                    </namedValues>
+                                  </value>
+                                </argument>
+                              </arguments>
+                            </apiCall>
+                          </steps>
+                        </clause>
+                      </clauses>
+                    </apiCall>
+                  </steps>
+                </clause>
+              </clauses>
+            </apiCall>
+            <apiCall apiId="com.provar.plugins.bundled.apis.control.StepGroup" name="StepGroup" testItemId="81" title="CleanUp Sponsorships">
+              <tags/>
+              <arguments>
+                <argument id="description">
+                  <value class="value" valueClass="string">CleanUp Sponsorships</value>
+                </argument>
+              </arguments>
+              <clauses>
+                <clause name="hidden" testItemId="82">
+                  <steps>
+                    <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexSoqlQuery" name="ApexSoqlQuery" testItemId="83" title="SOQL Query: select count() from Sponsorship__c where CreatedById = '{user.Id}' and CreatedDate&gt; {var_StartDate} and CreatedDate&lt; {var_EndDate}=&gt;SponsorshipRows">
+                      <arguments>
+                        <argument id="soqlQuery">
+                          <value class="compound">
+                            <parts>
+                              <value valueClass="string">select count() from Sponsorship__c where CreatedById = '</value>
+                              <variable>
+                                <path element="user"/>
+                                <path element="Id"/>
+                              </variable>
+                              <value valueClass="string">' and CreatedDate&gt; </value>
+                              <variable>
+                                <path element="var_StartDate"/>
+                              </variable>
+                              <value valueClass="string"> and CreatedDate&lt; </value>
+                              <variable>
+                                <path element="var_EndDate"/>
+                              </variable>
+                            </parts>
+                          </value>
+                        </argument>
+                        <argument id="apexConnectionName">
+                          <value class="value" valueClass="string">PwC_System_Admin</value>
+                        </argument>
+                        <argument id="resultListName">
+                          <value class="value" valueClass="string">SponsorshipRows</value>
+                        </argument>
+                        <argument id="resultScope">
+                          <value class="value" valueClass="string">Test</value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.SetValues" name="SetValues" testItemId="84" title="Set Values: var_TotalNumSponsorships">
+                      <arguments>
+                        <argument id="values">
+                          <value class="valueList" mutable="Mutable">
+                            <namedValues mutable="Mutable">
+                              <namedValue name="valuePath">
+                                <value class="value" valueClass="string">var_TotalNumSponsorships</value>
+                              </namedValue>
+                              <namedValue name="value">
+                                <value class="add">
+                                  <lhs class="div">
+                                    <lhs class="variable" topLevel="true">
+                                      <path element="SponsorshipRows"/>
+                                    </lhs>
+                                    <rhs class="value" valueClass="decimal">2000</rhs>
+                                  </lhs>
+                                  <rhs class="value" valueClass="decimal">1</rhs>
+                                </value>
+                              </namedValue>
+                              <namedValue name="valueScope">
+                                <value class="value" valueClass="string">Test</value>
+                              </namedValue>
+                            </namedValues>
+                          </value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.DoWhile" name="DoWhile" testItemId="85" title="While: {var_TotalNumSponsorships != 0}">
+                      <arguments>
+                        <argument id="condition">
+                          <value class="ne">
+                            <lhs class="variable">
+                              <path element="var_TotalNumSponsorships"/>
+                            </lhs>
+                            <rhs class="value" valueClass="decimal">0</rhs>
+                          </value>
+                        </argument>
+                        <argument id="counterName">
+                          <value class="value" valueClass="string">LoopCounter</value>
+                        </argument>
+                        <argument id="counterStart">
+                          <value class="value" valueClass="decimal">1</value>
+                        </argument>
+                        <argument id="counterEnd">
+                          <value class="variable">
+                            <path element="var_TotalNumSponsorships"/>
+                          </value>
+                        </argument>
+                        <argument id="continueOnFailure">
+                          <value class="value" valueClass="boolean">false</value>
+                        </argument>
+                      </arguments>
+                      <clauses>
+                        <clause name="substeps" testItemId="86">
+                          <steps>
+                            <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexExecute" name="ApexExecute" testItemId="87" title="Apex Execute">
+                              <arguments>
+                                <argument id="apexConnectionName">
+                                  <value class="value" valueClass="string">PwC_System_Admin</value>
+                                </argument>
+                                <argument id="apexBlock">
+                                  <value class="compound">
+                                    <parts>
+                                      <value valueClass="string">Sponsorship__c[] sponsorshipsToDelete = [select Id from Sponsorship__c where CreatedById= '</value>
+                                      <variable>
+                                        <path element="user"/>
+                                        <path element="Id"/>
+                                      </variable>
+                                      <value valueClass="string">' and CreatedDate &gt; </value>
+                                      <variable>
+                                        <path element="var_StartDate"/>
+                                      </variable>
+                                      <value valueClass="string"> and CreatedDate &lt; </value>
+                                      <variable>
+                                        <path element="var_EndDate"/>
+                                      </variable>
+                                      <value valueClass="string"> limit 2000] ;\ndelete sponsorshipsToDelete;</value>
+                                    </parts>
+                                  </value>
+                                </argument>
+                                <argument id="results">
+                                  <value class="valueList" mutable="Mutable">
+                                    <namedValues mutable="Mutable">
+                                      <namedValue name="resultName">
+                                        <value class="value" valueClass="string">ExecuteResult</value>
+                                      </namedValue>
+                                      <namedValue name="resultScope">
+                                        <value class="value" valueClass="string">Test</value>
+                                      </namedValue>
+                                      <namedValue name="regularExpression">
+                                        <value class="value" valueClass="string">Success</value>
+                                      </namedValue>
+                                    </namedValues>
+                                  </value>
+                                </argument>
+                              </arguments>
+                            </apiCall>
+                          </steps>
+                        </clause>
+                      </clauses>
+                    </apiCall>
+                  </steps>
+                </clause>
+              </clauses>
+            </apiCall>
+            <apiCall apiId="com.provar.plugins.bundled.apis.control.StepGroup" name="StepGroup" testItemId="60" title="CleanUp Notifications">
+              <tags/>
+              <arguments>
+                <argument id="description">
+                  <value class="value" valueClass="string">CleanUp Notifications</value>
+                </argument>
+              </arguments>
+              <clauses>
+                <clause name="hidden" testItemId="89">
+                  <steps>
+                    <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexSoqlQuery" name="ApexSoqlQuery" testItemId="90" title="SOQL Query: select count() from Notification__c where CreatedById = '{user.Id}' and CreatedDate&gt; {var_StartDate} and CreatedDate&lt; {var_EndDate}=&gt;NotificationRows">
+                      <arguments>
+                        <argument id="soqlQuery">
+                          <value class="compound">
+                            <parts>
+                              <value valueClass="string">select count() from Notification__c where CreatedById = '</value>
+                              <variable>
+                                <path element="user"/>
+                                <path element="Id"/>
+                              </variable>
+                              <value valueClass="string">' and CreatedDate&gt; </value>
+                              <variable>
+                                <path element="var_StartDate"/>
+                              </variable>
+                              <value valueClass="string"> and CreatedDate&lt; </value>
+                              <variable>
+                                <path element="var_EndDate"/>
+                              </variable>
+                            </parts>
+                          </value>
+                        </argument>
+                        <argument id="apexConnectionName">
+                          <value class="value" valueClass="string">PwC_System_Admin</value>
+                        </argument>
+                        <argument id="resultListName">
+                          <value class="value" valueClass="string">NotificationRows</value>
+                        </argument>
+                        <argument id="resultScope">
+                          <value class="value" valueClass="string">Test</value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.SetValues" name="SetValues" testItemId="91" title="Set Values: var_TotalNumNotification">
+                      <arguments>
+                        <argument id="values">
+                          <value class="valueList" mutable="Mutable">
+                            <namedValues mutable="Mutable">
+                              <namedValue name="valuePath">
+                                <value class="value" valueClass="string">var_TotalNumNotification</value>
+                              </namedValue>
+                              <namedValue name="value">
+                                <value class="add">
+                                  <lhs class="div">
+                                    <lhs class="variable" topLevel="true">
+                                      <path element="NotificationRows"/>
+                                    </lhs>
+                                    <rhs class="value" valueClass="decimal">2000</rhs>
+                                  </lhs>
+                                  <rhs class="value" valueClass="decimal">1</rhs>
+                                </value>
+                              </namedValue>
+                              <namedValue name="valueScope">
+                                <value class="value" valueClass="string">Test</value>
+                              </namedValue>
+                            </namedValues>
+                          </value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.DoWhile" name="DoWhile" testItemId="92" title="While: {var_TotalNumNotification != 0}">
+                      <arguments>
+                        <argument id="condition">
+                          <value class="ne">
+                            <lhs class="variable">
+                              <path element="var_TotalNumNotification"/>
+                            </lhs>
+                            <rhs class="value" valueClass="decimal">0</rhs>
+                          </value>
+                        </argument>
+                        <argument id="counterName">
+                          <value class="value" valueClass="string">LoopCounter</value>
+                        </argument>
+                        <argument id="counterStart">
+                          <value class="value" valueClass="decimal">1</value>
+                        </argument>
+                        <argument id="counterEnd">
+                          <value class="variable">
+                            <path element="var_TotalNumNotification"/>
+                          </value>
+                        </argument>
+                        <argument id="continueOnFailure">
+                          <value class="value" valueClass="boolean">false</value>
+                        </argument>
+                      </arguments>
+                      <clauses>
+                        <clause name="substeps" testItemId="93">
+                          <steps>
+                            <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexExecute" name="ApexExecute" testItemId="94" title="Apex Execute">
+                              <arguments>
+                                <argument id="apexConnectionName">
+                                  <value class="value" valueClass="string">PwC_System_Admin</value>
+                                </argument>
+                                <argument id="apexBlock">
+                                  <value class="compound">
+                                    <parts>
+                                      <value valueClass="string">Notification__c[] notificationsToDelete = [select Id from Notification__c where CreatedById= '</value>
+                                      <variable>
+                                        <path element="user"/>
+                                        <path element="Id"/>
+                                      </variable>
+                                      <value valueClass="string">' and CreatedDate &gt; </value>
+                                      <variable>
+                                        <path element="var_StartDate"/>
+                                      </variable>
+                                      <value valueClass="string"> and CreatedDate &lt; </value>
+                                      <variable>
+                                        <path element="var_EndDate"/>
+                                      </variable>
+                                      <value valueClass="string"> limit 2000] ;\ndelete notificationsToDelete;</value>
+                                    </parts>
+                                  </value>
+                                </argument>
+                                <argument id="results">
+                                  <value class="valueList" mutable="Mutable">
+                                    <namedValues mutable="Mutable">
+                                      <namedValue name="resultName">
+                                        <value class="value" valueClass="string">ExecuteResult</value>
+                                      </namedValue>
+                                      <namedValue name="resultScope">
+                                        <value class="value" valueClass="string">Test</value>
+                                      </namedValue>
+                                      <namedValue name="regularExpression">
+                                        <value class="value" valueClass="string">Success</value>
+                                      </namedValue>
+                                    </namedValues>
+                                  </value>
+                                </argument>
+                              </arguments>
+                            </apiCall>
+                          </steps>
+                        </clause>
+                      </clauses>
+                    </apiCall>
+                  </steps>
+                </clause>
+              </clauses>
+            </apiCall>
+            <apiCall apiId="com.provar.plugins.bundled.apis.control.StepGroup" name="StepGroup" testItemId="95" title="CleanUp Campaigns">
+              <tags/>
+              <arguments>
+                <argument id="description">
+                  <value class="value" valueClass="string">CleanUp Campaigns</value>
+                </argument>
+              </arguments>
+              <clauses>
+                <clause name="hidden" testItemId="103">
+                  <steps>
+                    <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexUpdateObject" name="ApexUpdateObject" parameterGeneratorUri="command:com.provar.plugins.forcedotcom.ui.commands.UpdateCustomObjectTestStepCommand" testItemId="354" title="Update Object: User = {PwCSystemAdmin}">
+                      <arguments>
+                        <argument id="objectType">
+                          <value class="value" valueClass="string">User</value>
+                        </argument>
+                        <argument id="resultName">
+                          <value class="value" valueClass="string">UserUpdated</value>
+                        </argument>
+                        <argument id="apexConnectionName">
+                          <value class="value" valueClass="string">PwC_System_Admin</value>
+                        </argument>
+                        <argument id="objectId">
+                          <value class="variable">
+                            <path element="PwCSystemAdmin"/>
+                          </value>
+                        </argument>
+                        <argument id="assignmentRuleId"/>
+                        <argument id="resultScope">
+                          <value class="value" valueClass="string">Test</value>
+                        </argument>
+                        <argument id="UserPermissionsMarketingUser">
+                          <value class="value" valueClass="boolean">true</value>
+                        </argument>
+                      </arguments>
+                      <parameterGeneratorProperties>
+                        <propertyValue name="com.provar.plugins.forcedotcom.ui.commands.UpdateCustomObjectTestStepCommand.ConnectionName">PwC_System_Admin</propertyValue>
+                        <propertyValue name="com.provar.plugins.forcedotcom.ui.commands.UpdateCustomObjectTestStepCommand.CustomObjectName">User</propertyValue>
+                      </parameterGeneratorProperties>
+                      <generatedParameters>
+                        <apiParam group="fields" modelBinding="sf:ui:binding:object?object=User&amp;field=UserPermissionsMarketingUser" name="UserPermissionsMarketingUser" title="UserPermissionsMarketingUser"/>
+                      </generatedParameters>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexSoqlQuery" name="ApexSoqlQuery" testItemId="104" title="SOQL Query: select count() from Campaign where CreatedById = '{user.Id}' and CreatedDate&gt; {var_StartDate} and CreatedDate&lt; {var_EndDate}=&gt;CampaignRows">
+                      <arguments>
+                        <argument id="soqlQuery">
+                          <value class="compound">
+                            <parts>
+                              <value valueClass="string">select count() from Campaign where CreatedById = '</value>
+                              <variable>
+                                <path element="user"/>
+                                <path element="Id"/>
+                              </variable>
+                              <value valueClass="string">' and CreatedDate&gt; </value>
+                              <variable>
+                                <path element="var_StartDate"/>
+                              </variable>
+                              <value valueClass="string"> and CreatedDate&lt; </value>
+                              <variable>
+                                <path element="var_EndDate"/>
+                              </variable>
+                            </parts>
+                          </value>
+                        </argument>
+                        <argument id="apexConnectionName">
+                          <value class="value" valueClass="string">PwC_System_Admin</value>
+                        </argument>
+                        <argument id="resultListName">
+                          <value class="value" valueClass="string">CampaignRows</value>
+                        </argument>
+                        <argument id="resultScope">
+                          <value class="value" valueClass="string">Test</value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.SetValues" name="SetValues" testItemId="105" title="Set Values: var_TotalNumCampaign">
+                      <arguments>
+                        <argument id="values">
+                          <value class="valueList" mutable="Mutable">
+                            <namedValues mutable="Mutable">
+                              <namedValue name="valuePath">
+                                <value class="value" valueClass="string">var_TotalNumCampaign</value>
+                              </namedValue>
+                              <namedValue name="value">
+                                <value class="add">
+                                  <lhs class="div">
+                                    <lhs class="variable" topLevel="true">
+                                      <path element="CampaignRows"/>
+                                    </lhs>
+                                    <rhs class="value" valueClass="decimal">2000</rhs>
+                                  </lhs>
+                                  <rhs class="value" valueClass="decimal">1</rhs>
+                                </value>
+                              </namedValue>
+                              <namedValue name="valueScope">
+                                <value class="value" valueClass="string">Test</value>
+                              </namedValue>
+                            </namedValues>
+                          </value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.DoWhile" name="DoWhile" testItemId="106" title="While: {var_TotalNumCampaign != 0}">
+                      <arguments>
+                        <argument id="condition">
+                          <value class="ne">
+                            <lhs class="variable">
+                              <path element="var_TotalNumCampaign"/>
+                            </lhs>
+                            <rhs class="value" valueClass="decimal">0</rhs>
+                          </value>
+                        </argument>
+                        <argument id="counterName">
+                          <value class="value" valueClass="string">LoopCounter</value>
+                        </argument>
+                        <argument id="counterStart">
+                          <value class="value" valueClass="decimal">1</value>
+                        </argument>
+                        <argument id="counterEnd">
+                          <value class="variable">
+                            <path element="var_TotalNumCampaign"/>
+                          </value>
+                        </argument>
+                        <argument id="continueOnFailure">
+                          <value class="value" valueClass="boolean">false</value>
+                        </argument>
+                      </arguments>
+                      <clauses>
+                        <clause name="substeps" testItemId="107">
+                          <steps>
+                            <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexExecute" name="ApexExecute" testItemId="108" title="Apex Execute">
+                              <arguments>
+                                <argument id="apexConnectionName">
+                                  <value class="value" valueClass="string">PwC_System_Admin</value>
+                                </argument>
+                                <argument id="apexBlock">
+                                  <value class="compound">
+                                    <parts>
+                                      <value valueClass="string">Campaign[] campaignsToDelete = [select Id from Campaign where CreatedById= '</value>
+                                      <variable>
+                                        <path element="user"/>
+                                        <path element="Id"/>
+                                      </variable>
+                                      <value valueClass="string">' and CreatedDate &gt; </value>
+                                      <variable>
+                                        <path element="var_StartDate"/>
+                                      </variable>
+                                      <value valueClass="string"> and CreatedDate &lt; </value>
+                                      <variable>
+                                        <path element="var_EndDate"/>
+                                      </variable>
+                                      <value valueClass="string"> limit 2000] ;\ndelete campaignsToDelete;</value>
+                                    </parts>
+                                  </value>
+                                </argument>
+                                <argument id="results">
+                                  <value class="valueList" mutable="Mutable">
+                                    <namedValues mutable="Mutable">
+                                      <namedValue name="resultName">
+                                        <value class="value" valueClass="string">ExecuteResult</value>
+                                      </namedValue>
+                                      <namedValue name="resultScope">
+                                        <value class="value" valueClass="string">Test</value>
+                                      </namedValue>
+                                      <namedValue name="regularExpression">
+                                        <value class="value" valueClass="string">Success</value>
+                                      </namedValue>
+                                    </namedValues>
+                                  </value>
+                                </argument>
+                              </arguments>
+                            </apiCall>
+                          </steps>
+                        </clause>
+                      </clauses>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.Finally" name="Finally" testItemId="350" title="Finally: ">
+                      <arguments>
+                        <argument id="description"/>
+                      </arguments>
+                      <clauses>
+                        <clause name="hidden" testItemId="351">
+                          <steps>
+                            <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexUpdateObject" name="ApexUpdateObject" parameterGeneratorUri="command:com.provar.plugins.forcedotcom.ui.commands.UpdateCustomObjectTestStepCommand" testItemId="355" title="Update Object: User = {PwCSystemAdmin}">
+                              <arguments>
+                                <argument id="objectType">
+                                  <value class="value" valueClass="string">User</value>
+                                </argument>
+                                <argument id="resultName">
+                                  <value class="value" valueClass="string">UserUpdated</value>
+                                </argument>
+                                <argument id="apexConnectionName">
+                                  <value class="value" valueClass="string">PwC_System_Admin</value>
+                                </argument>
+                                <argument id="objectId">
+                                  <value class="variable">
+                                    <path element="PwCSystemAdmin"/>
+                                  </value>
+                                </argument>
+                                <argument id="assignmentRuleId"/>
+                                <argument id="resultScope">
+                                  <value class="value" valueClass="string">Test</value>
+                                </argument>
+                                <argument id="UserPermissionsMarketingUser">
+                                  <value class="value" valueClass="boolean">false</value>
+                                </argument>
+                              </arguments>
+                              <parameterGeneratorProperties>
+                                <propertyValue name="com.provar.plugins.forcedotcom.ui.commands.UpdateCustomObjectTestStepCommand.ConnectionName">PwC_System_Admin</propertyValue>
+                                <propertyValue name="com.provar.plugins.forcedotcom.ui.commands.UpdateCustomObjectTestStepCommand.CustomObjectName">User</propertyValue>
+                              </parameterGeneratorProperties>
+                              <generatedParameters>
+                                <apiParam group="fields" modelBinding="sf:ui:binding:object?object=User&amp;field=UserPermissionsMarketingUser" name="UserPermissionsMarketingUser" title="UserPermissionsMarketingUser"/>
+                              </generatedParameters>
+                            </apiCall>
+                          </steps>
+                        </clause>
+                      </clauses>
+                    </apiCall>
+                  </steps>
+                </clause>
+              </clauses>
+            </apiCall>
+            <apiCall apiId="com.provar.plugins.bundled.apis.control.StepGroup" name="StepGroup" testItemId="109" title="CleanUp Leads">
+              <tags/>
+              <arguments>
+                <argument id="description">
+                  <value class="value" valueClass="string">CleanUp Leads</value>
+                </argument>
+              </arguments>
+              <clauses>
+                <clause name="hidden" testItemId="307">
+                  <steps>
+                    <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexSoqlQuery" name="ApexSoqlQuery" testItemId="308" title="SOQL Query: select count() from Lead where CreatedById = '{user.Id}' and CreatedDate&gt; {var_StartDate} and CreatedDate&lt; {var_EndDate}=&gt;LeadRows">
+                      <arguments>
+                        <argument id="soqlQuery">
+                          <value class="compound">
+                            <parts>
+                              <value valueClass="string">select count() from Lead where CreatedById = '</value>
+                              <variable>
+                                <path element="user"/>
+                                <path element="Id"/>
+                              </variable>
+                              <value valueClass="string">' and CreatedDate&gt; </value>
+                              <variable>
+                                <path element="var_StartDate"/>
+                              </variable>
+                              <value valueClass="string"> and CreatedDate&lt; </value>
+                              <variable>
+                                <path element="var_EndDate"/>
+                              </variable>
+                            </parts>
+                          </value>
+                        </argument>
+                        <argument id="apexConnectionName">
+                          <value class="value" valueClass="string">PwC_System_Admin</value>
+                        </argument>
+                        <argument id="resultListName">
+                          <value class="value" valueClass="string">LeadRows</value>
+                        </argument>
+                        <argument id="resultScope">
+                          <value class="value" valueClass="string">Test</value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.SetValues" name="SetValues" testItemId="309" title="Set Values: var_TotalNumLead">
+                      <arguments>
+                        <argument id="values">
+                          <value class="valueList" mutable="Mutable">
+                            <namedValues mutable="Mutable">
+                              <namedValue name="valuePath">
+                                <value class="value" valueClass="string">var_TotalNumLead</value>
+                              </namedValue>
+                              <namedValue name="value">
+                                <value class="add">
+                                  <lhs class="div">
+                                    <lhs class="variable" topLevel="true">
+                                      <path element="LeadRows"/>
+                                    </lhs>
+                                    <rhs class="value" valueClass="decimal">2000</rhs>
+                                  </lhs>
+                                  <rhs class="value" valueClass="decimal">1</rhs>
+                                </value>
+                              </namedValue>
+                              <namedValue name="valueScope">
+                                <value class="value" valueClass="string">Test</value>
+                              </namedValue>
+                            </namedValues>
+                          </value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.DoWhile" name="DoWhile" testItemId="310" title="While: {var_TotalNumLead != 0}">
+                      <arguments>
+                        <argument id="condition">
+                          <value class="ne">
+                            <lhs class="variable">
+                              <path element="var_TotalNumLead"/>
+                            </lhs>
+                            <rhs class="value" valueClass="decimal">0</rhs>
+                          </value>
+                        </argument>
+                        <argument id="counterName">
+                          <value class="value" valueClass="string">LoopCounter</value>
+                        </argument>
+                        <argument id="counterStart">
+                          <value class="value" valueClass="decimal">1</value>
+                        </argument>
+                        <argument id="counterEnd">
+                          <value class="variable">
+                            <path element="var_TotalNumLead"/>
+                          </value>
+                        </argument>
+                        <argument id="continueOnFailure">
+                          <value class="value" valueClass="boolean">true</value>
+                        </argument>
+                      </arguments>
+                      <clauses>
+                        <clause name="substeps" testItemId="311">
+                          <steps>
+                            <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexExecute" name="ApexExecute" testItemId="312" title="Apex Execute">
+                              <arguments>
+                                <argument id="apexConnectionName">
+                                  <value class="value" valueClass="string">PwC_System_Admin</value>
+                                </argument>
+                                <argument id="apexBlock">
+                                  <value class="compound">
+                                    <parts>
+                                      <value valueClass="string">Lead[] leadsToDelete = [select Id from Lead where CreatedById= '</value>
+                                      <variable>
+                                        <path element="user"/>
+                                        <path element="Id"/>
+                                      </variable>
+                                      <value valueClass="string">' and CreatedDate &gt; </value>
+                                      <variable>
+                                        <path element="var_StartDate"/>
+                                      </variable>
+                                      <value valueClass="string"> and CreatedDate &lt; </value>
+                                      <variable>
+                                        <path element="var_EndDate"/>
+                                      </variable>
+                                      <value valueClass="string"> limit 2000] ;\ndelete leadsToDelete;</value>
+                                    </parts>
+                                  </value>
+                                </argument>
+                                <argument id="results">
+                                  <value class="valueList" mutable="Mutable">
+                                    <namedValues mutable="Mutable">
+                                      <namedValue name="resultName">
+                                        <value class="value" valueClass="string">ExecuteResult</value>
+                                      </namedValue>
+                                      <namedValue name="resultScope">
+                                        <value class="value" valueClass="string">Test</value>
+                                      </namedValue>
+                                      <namedValue name="regularExpression">
+                                        <value class="value" valueClass="string">Success</value>
+                                      </namedValue>
+                                    </namedValues>
+                                  </value>
+                                </argument>
+                              </arguments>
+                            </apiCall>
+                          </steps>
+                        </clause>
+                      </clauses>
+                    </apiCall>
+                  </steps>
+                </clause>
+              </clauses>
+            </apiCall>
+            <apiCall apiId="com.provar.plugins.bundled.apis.control.StepGroup" name="StepGroup" testItemId="313" title="CleanUp Opportunity_Category__c">
+              <tags/>
+              <arguments>
+                <argument id="description">
+                  <value class="value" valueClass="string">CleanUp Opportunity_Category__c</value>
+                </argument>
+              </arguments>
+              <clauses>
+                <clause name="hidden" testItemId="321">
+                  <steps>
+                    <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexSoqlQuery" name="ApexSoqlQuery" testItemId="322" title="SOQL Query: select count() from Opportunity_Category__c where CreatedById = '{user.Id}' and CreatedDate&gt; {var_StartDate} and CreatedDate&lt; {var_EndDate}=&gt;Opportunity_CategoryRows">
+                      <arguments>
+                        <argument id="soqlQuery">
+                          <value class="compound">
+                            <parts>
+                              <value valueClass="string">select count() from Opportunity_Category__c where CreatedById = '</value>
+                              <variable>
+                                <path element="user"/>
+                                <path element="Id"/>
+                              </variable>
+                              <value valueClass="string">' and CreatedDate&gt; </value>
+                              <variable>
+                                <path element="var_StartDate"/>
+                              </variable>
+                              <value valueClass="string"> and CreatedDate&lt; </value>
+                              <variable>
+                                <path element="var_EndDate"/>
+                              </variable>
+                            </parts>
+                          </value>
+                        </argument>
+                        <argument id="apexConnectionName">
+                          <value class="value" valueClass="string">PwC_System_Admin</value>
+                        </argument>
+                        <argument id="resultListName">
+                          <value class="value" valueClass="string">Opportunity_CategoryRows</value>
+                        </argument>
+                        <argument id="resultScope">
+                          <value class="value" valueClass="string">Test</value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.SetValues" name="SetValues" testItemId="323" title="Set Values: var_TotalNumOpportunity_CategoryRows">
+                      <arguments>
+                        <argument id="values">
+                          <value class="valueList" mutable="Mutable">
+                            <namedValues mutable="Mutable">
+                              <namedValue name="valuePath">
+                                <value class="value" valueClass="string">var_TotalNumOpportunity_CategoryRows</value>
+                              </namedValue>
+                              <namedValue name="value">
+                                <value class="add">
+                                  <lhs class="div">
+                                    <lhs class="variable" topLevel="true">
+                                      <path element="Opportunity_CategoryRows"/>
+                                    </lhs>
+                                    <rhs class="value" valueClass="decimal">2000</rhs>
+                                  </lhs>
+                                  <rhs class="value" valueClass="decimal">1</rhs>
+                                </value>
+                              </namedValue>
+                              <namedValue name="valueScope">
+                                <value class="value" valueClass="string">Test</value>
+                              </namedValue>
+                            </namedValues>
+                          </value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.DoWhile" name="DoWhile" testItemId="324" title="While: {var_TotalNumOpportunity_CategoryRows != 0}">
+                      <arguments>
+                        <argument id="condition">
+                          <value class="ne">
+                            <lhs class="variable">
+                              <path element="var_TotalNumOpportunity_CategoryRows"/>
+                            </lhs>
+                            <rhs class="value" valueClass="decimal">0</rhs>
+                          </value>
+                        </argument>
+                        <argument id="counterName">
+                          <value class="value" valueClass="string">LoopCounter</value>
+                        </argument>
+                        <argument id="counterStart">
+                          <value class="value" valueClass="decimal">1</value>
+                        </argument>
+                        <argument id="counterEnd">
+                          <value class="variable">
+                            <path element="var_TotalNumOpportunity_CategoryRows"/>
+                          </value>
+                        </argument>
+                        <argument id="continueOnFailure">
+                          <value class="value" valueClass="boolean">false</value>
+                        </argument>
+                      </arguments>
+                      <clauses>
+                        <clause name="substeps" testItemId="325">
+                          <steps>
+                            <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexExecute" name="ApexExecute" testItemId="326" title="Apex Execute">
+                              <arguments>
+                                <argument id="apexConnectionName">
+                                  <value class="value" valueClass="string">PwC_System_Admin</value>
+                                </argument>
+                                <argument id="apexBlock">
+                                  <value class="compound">
+                                    <parts>
+                                      <value valueClass="string">Opportunity_Category__c[] leadsToDelete = [select Id from Opportunity_Category__c where CreatedById= '</value>
+                                      <variable>
+                                        <path element="user"/>
+                                        <path element="Id"/>
+                                      </variable>
+                                      <value valueClass="string">' and CreatedDate &gt; </value>
+                                      <variable>
+                                        <path element="var_StartDate"/>
+                                      </variable>
+                                      <value valueClass="string"> and CreatedDate &lt; </value>
+                                      <variable>
+                                        <path element="var_EndDate"/>
+                                      </variable>
+                                      <value valueClass="string"> limit 2000] ;\ndelete leadsToDelete;</value>
+                                    </parts>
+                                  </value>
+                                </argument>
+                                <argument id="results">
+                                  <value class="valueList" mutable="Mutable">
+                                    <namedValues mutable="Mutable">
+                                      <namedValue name="resultName">
+                                        <value class="value" valueClass="string">ExecuteResult</value>
+                                      </namedValue>
+                                      <namedValue name="resultScope">
+                                        <value class="value" valueClass="string">Test</value>
+                                      </namedValue>
+                                      <namedValue name="regularExpression">
+                                        <value class="value" valueClass="string">Success</value>
+                                      </namedValue>
+                                    </namedValues>
+                                  </value>
+                                </argument>
+                              </arguments>
+                            </apiCall>
+                          </steps>
+                        </clause>
+                      </clauses>
+                    </apiCall>
+                  </steps>
+                </clause>
+              </clauses>
+            </apiCall>
+            <apiCall apiId="com.provar.plugins.bundled.apis.control.StepGroup" name="StepGroup" testItemId="341" title="CleanUp OpportunityLineItemSchedule">
+              <tags/>
+              <arguments>
+                <argument id="description">
+                  <value class="value" valueClass="string">CleanUp OpportunityLineItemSchedule</value>
+                </argument>
+              </arguments>
+              <clauses>
+                <clause name="hidden" testItemId="342">
+                  <steps>
+                    <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexSoqlQuery" name="ApexSoqlQuery" testItemId="343" title="SOQL Query: select count() from OpportunityLineItemSchedule where CreatedById = '{user.Id}' and CreatedDate&gt; {var_StartDate} and CreatedDate&lt; {var_EndDate}=&gt;OpportunityLineItemScheduleRows">
+                      <arguments>
+                        <argument id="soqlQuery">
+                          <value class="compound">
+                            <parts>
+                              <value valueClass="string">select count() from OpportunityLineItemSchedule where CreatedById = '</value>
+                              <variable>
+                                <path element="user"/>
+                                <path element="Id"/>
+                              </variable>
+                              <value valueClass="string">' and CreatedDate&gt; </value>
+                              <variable>
+                                <path element="var_StartDate"/>
+                              </variable>
+                              <value valueClass="string"> and CreatedDate&lt; </value>
+                              <variable>
+                                <path element="var_EndDate"/>
+                              </variable>
+                            </parts>
+                          </value>
+                        </argument>
+                        <argument id="apexConnectionName">
+                          <value class="value" valueClass="string">PwC_System_Admin</value>
+                        </argument>
+                        <argument id="resultListName">
+                          <value class="value" valueClass="string">OpportunityLineItemScheduleRows</value>
+                        </argument>
+                        <argument id="resultScope">
+                          <value class="value" valueClass="string">Test</value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.SetValues" name="SetValues" testItemId="344" title="Set Values: var_TotalNumOpportunityLineItemScheduleRows">
+                      <arguments>
+                        <argument id="values">
+                          <value class="valueList" mutable="Mutable">
+                            <namedValues mutable="Mutable">
+                              <namedValue name="valuePath">
+                                <value class="value" valueClass="string">var_TotalNumOpportunityLineItemScheduleRows</value>
+                              </namedValue>
+                              <namedValue name="value">
+                                <value class="add">
+                                  <lhs class="div">
+                                    <lhs class="variable" topLevel="true">
+                                      <path element="OpportunityLineItemScheduleRows"/>
+                                    </lhs>
+                                    <rhs class="value" valueClass="decimal">2000</rhs>
+                                  </lhs>
+                                  <rhs class="value" valueClass="decimal">1</rhs>
+                                </value>
+                              </namedValue>
+                              <namedValue name="valueScope">
+                                <value class="value" valueClass="string">Test</value>
+                              </namedValue>
+                            </namedValues>
+                          </value>
+                        </argument>
+                      </arguments>
+                    </apiCall>
+                    <apiCall apiId="com.provar.plugins.bundled.apis.control.DoWhile" name="DoWhile" testItemId="345" title="While: {var_TotalNumOpportunityLineItemScheduleRows != 0}">
+                      <arguments>
+                        <argument id="condition">
+                          <value class="ne">
+                            <lhs class="variable">
+                              <path element="var_TotalNumOpportunityLineItemScheduleRows"/>
+                            </lhs>
+                            <rhs class="value" valueClass="decimal">0</rhs>
+                          </value>
+                        </argument>
+                        <argument id="counterName">
+                          <value class="value" valueClass="string">LoopCounter</value>
+                        </argument>
+                        <argument id="counterStart">
+                          <value class="value" valueClass="decimal">1</value>
+                        </argument>
+                        <argument id="counterEnd">
+                          <value class="variable">
+                            <path element="var_TotalNumOpportunityLineItemScheduleRows"/>
+                          </value>
+                        </argument>
+                        <argument id="continueOnFailure">
+                          <value class="value" valueClass="boolean">false</value>
+                        </argument>
+                      </arguments>
+                      <clauses>
+                        <clause name="substeps" testItemId="346">
+                          <steps>
+                            <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexExecute" name="ApexExecute" testItemId="347" title="Apex Execute">
+                              <arguments>
+                                <argument id="apexConnectionName">
+                                  <value class="value" valueClass="string">PwC_System_Admin</value>
+                                </argument>
+                                <argument id="apexBlock">
+                                  <value class="compound">
+                                    <parts>
+                                      <value valueClass="string">OpportunityLineItemSchedule[] leadsToDelete = [select Id from OpportunityLineItemSchedule where CreatedById= '</value>
+                                      <variable>
+                                        <path element="user"/>
+                                        <path element="Id"/>
+                                      </variable>
+                                      <value valueClass="string">' and CreatedDate &gt; </value>
+                                      <variable>
+                                        <path element="var_StartDate"/>
+                                      </variable>
+                                      <value valueClass="string"> and CreatedDate &lt; </value>
+                                      <variable>
+                                        <path element="var_EndDate"/>
+                                      </variable>
+                                      <value valueClass="string"> limit 2000] ;\ndelete leadsToDelete;</value>
+                                    </parts>
+                                  </value>
+                                </argument>
+                                <argument id="results">
+                                  <value class="valueList" mutable="Mutable">
+                                    <namedValues mutable="Mutable">
+                                      <namedValue name="resultName">
+                                        <value class="value" valueClass="string">ExecuteResult</value>
+                                      </namedValue>
+                                      <namedValue name="resultScope">
+                                        <value class="value" valueClass="string">Test</value>
+                                      </namedValue>
+                                      <namedValue name="regularExpression">
+                                        <value class="value" valueClass="string">Success</value>
+                                      </namedValue>
+                                    </namedValues>
+                                  </value>
+                                </argument>
+                              </arguments>
+                            </apiCall>
+                          </steps>
+                        </clause>
+                      </clauses>
+                    </apiCall>
+                  </steps>
+                </clause>
+              </clauses>
+            </apiCall>
+          </steps>
+        </clause>
+      </clauses>
+    </apiCall>
+  </steps>
+</testCase>
